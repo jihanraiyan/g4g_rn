@@ -11,7 +11,7 @@ const games = [
 
 export default function Index() {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container} edges={['top']}>
       {/* Header with points */}
       <View style={styles.header}>
         <Text style={styles.points}>🍚 100,567</Text>
@@ -47,7 +47,7 @@ export default function Index() {
           ))}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
