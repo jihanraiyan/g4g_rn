@@ -12,7 +12,7 @@ const challenges = [
 
 export default function DailyGoals() {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>My Activity</Text>
         <FontAwesome5 name="user-circle" size={24} color="#333" />
@@ -49,7 +49,7 @@ export default function DailyGoals() {
           </View>
         ))}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 

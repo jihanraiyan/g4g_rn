@@ -4,7 +4,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function Profile() {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ScrollView>
         {/* Profile Card */}
         <View style={styles.profileCard}>
@@ -59,7 +59,7 @@ export default function Profile() {
           <Text style={styles.donateButtonText}>Donate Now</Text>
         </TouchableOpacity>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
