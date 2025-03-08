@@ -14,7 +14,7 @@ const leaderboardData = [
 
 export default function Leaderboard() {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.points}>🍚 100,567</Text>
         <FontAwesome5 name="user-circle" size={24} color="#333" />
@@ -37,7 +37,7 @@ export default function Leaderboard() {
           </View>
         )}
       />
-    </SafeAreaView>
+    </View>
   );
 }
 
