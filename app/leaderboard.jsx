@@ -1,18 +1,53 @@
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FontAwesome5 } from "@expo/vector-icons";
-
-const leaderboardData = [
-  { id: '1', name: 'Name', points: '1,000,000', rank: '#1' },
-  { id: '2', name: 'Name', points: '1,000,000', rank: '#2' },
-  { id: '3', name: 'Name', points: '1,000,000', rank: '#3' },
-  { id: '4', name: 'Name', points: '1,000,000', rank: '#4' },
-  { id: '5', name: 'Name', points: '1,000,000', rank: '#5' },
-  { id: '6', name: 'Name', points: '1,000,000', rank: '#6' },
-  { id: '7', name: 'Name', points: '1,000,000', rank: '#7' },
-];
+import { useState, useEffect } from "react";
+import { db } from "../firebaseConfig";
+import { collection, query, orderBy, limit, onSnapshot } from "firebase/firestore";
 
 export default function Leaderboard() {
+  const [leaderboardData, setLeaderboardData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Create a query to get top 100 users sorted by points
+    const q = query(
+      collection(db, "users"),
+      orderBy("points", "desc"),
+      limit(100)
+    );
+
+    // Set up real-time listener for leaderboard updates
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const users = [];
+      snapshot.forEach((doc) => {
+        const userData = doc.data();
+        users.push({
+          id: doc.id,
+          name: userData.name || "Anonymous",
+          points: userData.points.toLocaleString() || "0",
+          rank: `#${users.length + 1}`
+        });
+      });
+      setLeaderboardData(users);
+      setLoading(false);
+    }, (error) => {
+      console.error("Error fetching leaderboard:", error);
+      setLoading(false);
+    });
+
+    // Cleanup: Remove the listener when component unmounts
+    return () => unsubscribe();
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={[styles.container, styles.centered]}>
+        <ActivityIndicator size="large" color="#82D9C8" />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -45,6 +80,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  centered: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   header: {
     flexDirection: 'row',

@@ -2,11 +2,11 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore"; // Added for database functionality
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Firebase configuration object with your project's credentials
 const firebaseConfig = {
   apiKey: "AIzaSyCfkdpvrvlcl3i0OqUNFuj_mQYUXEIgh6U",
   authDomain: "games4gaza-272e1.firebaseapp.com",
@@ -17,9 +17,11 @@ const firebaseConfig = {
   measurementId: "G-YNN3B4FB0T"
 };
 
-// Initialize Firebase
+// Initialize Firebase services
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-const auth = getAuth(app);
+const auth = getAuth(app);        // For user authentication
+const db = getFirestore(app);     // For storing user data and leaderboard
 
-export { app, auth };
+// Export initialized services for use in other components
+export { app, auth, db };

@@ -1,7 +1,38 @@
-import { Tabs } from "expo-router";
+import { Stack } from 'expo-router';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { FontAwesome5 } from "@expo/vector-icons";
 
-export default function AppLayout() {
+export default function Layout() {
+  return (
+    <SafeAreaProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen 
+            name="(tabs)" 
+            options={{ headerShown: false }} 
+          />
+          <Stack.Screen 
+            name="games/4096" 
+            options={{ 
+              title: "4096!",
+              headerStyle: {
+                backgroundColor: '#faf8ef',
+              },
+              headerTintColor: '#776e65',
+            }} 
+          />
+        </Stack>
+      </GestureHandlerRootView>
+    </SafeAreaProvider>
+  );
+}
+
+function AppLayout() {
   return (
     <Tabs
       screenOptions={{
